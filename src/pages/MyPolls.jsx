@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Shell from './Shell';
 import { EmptyState } from '../components/common/EmptyState';
+import { PollCard } from '../components/common/PollCard';
 import { getPolls } from '../services/polls';
 import { useAuth } from '../hooks/useAuth';
 
@@ -72,9 +73,7 @@ const MyPolls = () => {
         {!loading && polls.length > 0 && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {polls.map((poll) => (
-              <div key={poll.id} className="bg-white border-2 border-black shadow-[8px_8px_0px_0px_#000] p-6">
-                <h3 className="font-black text-[#455859]">{poll.question}</h3>
-              </div>
+              <PollCard key={poll.id} poll={poll} />
             ))}
           </div>
         )}

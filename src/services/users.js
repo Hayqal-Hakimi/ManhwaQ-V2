@@ -5,7 +5,21 @@ export const getUserById = async (id) => apiRequest(`/users/${id}`);
 export const getCurrentUser = async () => {
   const token = localStorage.getItem('manhwaq_token');
   if (!token) return emptyItem();
-  return apiRequest('/users/me');
+  
+  const parts = token.split('_');
+  const username = parts[3] || 'reader';
+  const role = parts[4] || 'user';
+  
+  return { 
+    data: { 
+      id: 'mock-123', 
+      username, 
+      email: `${username}@mock.com`, 
+      role,
+      created_at: '2025-05-26',
+      is_premium: role === 'admin'
+    } 
+  };
 };
 
 export const updateProfile = async () => emptyItem('API belum disambung.');

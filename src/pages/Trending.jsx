@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Shell from './Shell';
 import { ManhwaCard } from '../components/common/ManhwaCard';
 import { EmptyState } from '../components/common/EmptyState';
+import { GridSkeleton } from '../components/common/Skeleton';
 import { getManhwaList } from '../services/manhwa';
 
 const GENRES = ['action', 'fantasy', 'sports', 'revenge', 'meta', 'drama'];
@@ -90,7 +91,7 @@ const Trending = () => {
           ))}
         </div>
 
-        {loading && <div className="text-sm font-bold text-[#455859]/60">Loading...</div>}
+        {loading && <GridSkeleton count={8} />}
 
         {!loading && items.length === 0 && (
           <EmptyState icon="menu_book" title="Tiada manhwa" description="Cuba filter lain." />
