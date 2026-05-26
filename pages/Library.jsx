@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Shell from './Shell';
 import { EmptyState } from '../components/common/EmptyState';
+import { GridSkeleton } from '../components/common/Skeleton';
 import { getLibrary, removeFromLibrary } from '../services/library';
 
 const SHELVES = [
@@ -121,7 +122,7 @@ const Library = () => {
           </div>
         </div>
 
-        {loading && <div className="text-sm font-bold text-[#455859]/60">Loading library...</div>}
+        {loading && <GridSkeleton count={3} />}
 
         {!loading && items.length === 0 && (
           <EmptyState

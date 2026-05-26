@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Shell from './Shell';
 import { changePassword } from '../services/users';
@@ -13,6 +13,27 @@ const Settings = () => {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
+
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    setIsDark(document.documentElement.classList.contains('dark'));
+  }, []);
+
+  const toggleDarkMode = () => {
+    if (isDark) {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+      setIsDark(false);
+      setMessage('Dark mode diaktifkan: OFF');
+    } else {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+      setIsDark(true);
+      setMessage('Dark mode diaktifkan: ON');
+    }
+    setTimeout(() => setMessage(''), 3000);
+  };
 
   const handlePasswordSubmit = async (event) => {
     event.preventDefault();
@@ -135,11 +156,27 @@ const Settings = () => {
 
           <section className="bg-white border-2 border-black shadow-[8px_8px_0px_0px_#000] overflow-hidden">
             <div className="p-6 border-b-2 border-black bg-[#455859]/5">
-              <h3 className="text-xl font-black text-[#455859]">Coming Soon</h3>
+              <h3 className="text-xl font-black text-[#455859]">Preferences</h3>
             </div>
-            <div className="p-6 space-y-4 text-sm text-[#455859]/70 font-medium">
-              <p>Privacy toggle, Google OAuth (Cognito), dan delete account — Phase 2.</p>
-              <p>Cloud: settings disimpan dalam RDS, bukan local files.</p>
+            <div className="p-6 space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h4 className="font-bold text-[#455859]">Dark Mode (Beta)</h4>
+                  <p className="text-xs text-[#455859]/70 font-medium">Toggle tema cerah/gelap</p>
+                </div>
+                <button
+                  onClick={toggleDarkMode}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full border-2 border-black transition-colors ${
+                    isDark ? 'bg-[#455859]' : 'bg-gray-200'
+                  }`}
+                >
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-white border border-black transition-transform ${
+                      isDark ? 'translate-x-6' : 'translate-x-1'
+                    }`}
+                  />
+                </button>
+              </div>
             </div>
           </section>
         </div>

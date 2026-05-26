@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
+import { NotificationDropdown } from '../common/NotificationDropdown';
 
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { isAuthenticated, user, logout } = useAuth();
+  const [showNotifications, setShowNotifications] = useState(false);
 
   const navLinks = [
     { label: 'Home', to: '/' },
@@ -75,6 +77,24 @@ const Header = () => {
 
           {isAuthenticated ? (
             <>
+              {/* Notification Bell */}
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setShowNotifications(!showNotifications)}
+                  className="p-1.5 hover:bg-black/5 transition-colors relative flex items-center justify-center"
+                  aria-label="Notifications"
+                >
+                  <span className="material-icons text-[#455859]">notifications</span>
+                  {/* Unread badge */}
+                  <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#ba1a1a] rounded-full border border-[#fcf9f8]"></span>
+                </button>
+                <NotificationDropdown 
+                  isOpen={showNotifications} 
+                  onClose={() => setShowNotifications(false)} 
+                />
+              </div>
+
               <Link
                 to="/profile"
                 className="hidden sm:flex items-center space-x-2 px-3 py-1.5 border-2 border-black bg-white shadow-[2px_2px_0px_0px_#000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[1px_1px_0px_0px_#000] transition-all"

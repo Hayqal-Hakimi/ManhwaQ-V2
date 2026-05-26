@@ -2,6 +2,8 @@ import React from 'react';
 import Header from '../components/layout/header';
 import Sidebar from '../components/layout/sidebar';
 
+import MobileNav from '../components/layout/MobileNav';
+
 /**
  * Shell Component
  * Responsibility: The high-level layout wrapper that includes the Header and Sidebar.
@@ -14,7 +16,7 @@ const Shell = ({ children }) => {
       <Sidebar />
 
       {/* Main Layout Area */}
-      <div className="md:ml-64 flex flex-col min-h-screen relative">
+      <div className="md:ml-64 flex flex-col min-h-screen relative pb-16 md:pb-0">
         {/* Global Top Bar */}
         <Header />
 
@@ -23,8 +25,8 @@ const Shell = ({ children }) => {
           {children}
         </main>
 
-        {/* Mobile Navigation (Bottom Bar) - To be implemented as MobileNav.jsx */}
-        {/* <MobileNav /> */}
+        {/* Mobile Navigation (Bottom Bar) */}
+        <MobileNav />
       </div>
 
       {/* Global Inked Overlay Effect (Optional) */}
